@@ -3,13 +3,13 @@ package perriAlessandro.DesignPattern.adapter;
 import lombok.Builder;
 import lombok.Data;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 @Builder
 @Data
 public class Info {
     private String nome;
     private String cognome;
-    private Date dataDiNascita;
+    private LocalDate dataDiNascita;
 
 }

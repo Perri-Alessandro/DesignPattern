@@ -2,7 +2,7 @@ package perriAlessandro.DesignPattern.adapter;
 
 import lombok.Data;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 @Data
 public class InfoAdapter implements DataSource {
@@ -14,8 +14,8 @@ public class InfoAdapter implements DataSource {
 
     @Override
     public int getEtà() {
-        Date dataDiNascita = info.getDataDiNascita();
-        Date dataCorrente = new Date();
+        LocalDate dataDiNascita = info.getDataDiNascita();
+        LocalDate dataCorrente = LocalDate.now();
         int età = dataCorrente.getYear() - dataDiNascita.getYear();
         return età;
     }

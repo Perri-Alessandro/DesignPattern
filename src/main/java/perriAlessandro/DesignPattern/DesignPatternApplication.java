@@ -7,7 +7,8 @@ import perriAlessandro.DesignPattern.adapter.InfoAdapter;
 import perriAlessandro.DesignPattern.adapter.UserData;
 import perriAlessandro.DesignPattern.chainOfResponsibility.*;
 
-import java.util.Date;
+import java.time.LocalDate;
+import java.util.Scanner;
 
 @SpringBootApplication
 public class DesignPatternApplication {
@@ -16,20 +17,42 @@ public class DesignPatternApplication {
     public static void main(String[] args) {
 
         SpringApplication.run(DesignPatternApplication.class, args);
+        Scanner sc = new Scanner(System.in);
+
 
         System.out.println("------------------------ ADAPTER ------------------------");
-        Info info = Info.builder().nome("Mario")
-                .cognome("Rossi").dataDiNascita(new Date(1990, 2, 26)).build();
 
-        InfoAdapter adapter = new InfoAdapter(info);
+        System.out.print("Inserisci il nome: ");
+        String name = sc.nextLine();
+        System.out.print("Inserisci il cognome: ");
+        String surname = sc.nextLine();
 
-        UserData userData = UserData.builder().build();
+        boolean dataValida = false;
 
-        userData.getData(adapter); //Dati da info
+        while (!dataValida) {
+            try {
+                System.out.print("Inserisci la data di nascita (formato yyyy-mm-dd): ");
+                LocalDate data = LocalDate.parse(sc.nextLine());
 
-        //Nome ed età di userData
-        System.out.println("Il Nome completo è " + userData.getNomeCompleto());
-        System.out.println("L'età è " + userData.getEtà());
+                Info info = Info.builder().nome(name)
+                        .cognome(surname).dataDiNascita(data).build();
+
+                InfoAdapter adapter = new InfoAdapter(info);
+
+                UserData userData = UserData.builder().build();
+
+                userData.getData(adapter); //Dati da info
+
+                //Nome ed età di userData
+                System.out.println("Il Nome completo è " + userData.getNomeCompleto());
+                System.out.println("L'età è " + userData.getEtà());
+                dataValida = true;
+
+            } catch (Exception e) {
+                System.out.println("Formato data non valido. Assicurati di inserire la data nel formato corretto (yyyy-mm-dd).");
+            }
+        }
+
 
         ///////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -53,6 +76,7 @@ public class DesignPatternApplication {
             tenente.gestisciRichiesta(importo);
         }
 
+        sc.close();
     }
 
 }
